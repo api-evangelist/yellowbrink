@@ -1,7 +1,16 @@
 aid: yellowbrink
 name: YellowBrink
-description: 'YellowBrink is a company surfaced via the API Evangelist harvest backlog (source: openehr-coalition)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  YellowBrink is a Netherlands-based, vendor-neutral community platform for open health data,
+  founded by Jan de Lange and Bouwe Koopal to connect healthcare professionals, vendors,
+  researchers and policymakers working with open standards such as openEHR, HL7 FHIR, OMOP and
+  SNOMED CT. The name pairs the Yellow Pages — showing who builds what — with "brink", the Dutch
+  word for the village square where a community gathers. It runs weekly webinars in cooperation
+  with openEHR NL, country and topic special-interest groups, and discussion and co-creation
+  rooms, hosts "The Brink" partner and meeting area at the EHRCON26 conference in Amsterdam, and
+  is developing a postdoctoral European Master of Data Availability programme with European
+  universities and hospital systems. The platform is a white-labelled Innoloft LoftOS tenant;
+  YellowBrink itself publishes no public API, SDK or developer program.
 url: https://raw.githubusercontent.com/api-evangelist/yellowbrink/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:openehr-coalition
@@ -12,6 +21,15 @@ created: '2026-09-02'
 modified: '2026-09-02'
 tags:
 - Company
+- Health Care
+- Health Data
+- openEHR
+- Interoperability
+- Standards
+- Community
+- Education
+- Events
+- Netherlands
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -19,5 +37,32 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/yellowbrink-domain-security.yml
+- type: LLMsTxt
+  url: llms/yellowbrink-llms.txt
 - type: Website
   url: https://www.yellowbrink.com/
+x-enrichment:
+  date: '2026-09-02'
+  status: minimal
+  artifacts_added: 3
+  pass: local-v1
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    YellowBrink is a community platform, not a software vendor — its site is a white-labelled
+    Innoloft LoftOS single-page app that answers 200 with the identical 12,016-byte HTML shell
+    for every path probed (including /openapi.json and every /.well-known/*), and the only API
+    behind it, api.innoloft.com, belongs to Innoloft and returns 401 anonymously.
+  evidence:
+  - url: https://www.yellowbrink.com/openapi.json
+    status: 200
+  - url: https://www.yellowbrink.com/.well-known/agent-card.json
+    status: 200
+  - url: https://api.innoloft.com/openapi.json
+    status: 401
+  - url: https://www.yellowbrink.com/robots.txt
+    status: 200
+  checked: '2026-09-02'

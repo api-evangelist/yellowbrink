@@ -1,0 +1,84 @@
+generated: '2026-09-02'
+method: probed
+source: live HTTP probes of the /.well-known/ discovery surface on every host named in apis.yml
+description: >-
+  Probe of the /.well-known/ discovery surface for YellowBrink. www.yellowbrink.com is a
+  fully client-side single-page application (a white-labelled Innoloft LoftOS tenant) and
+  answers HTTP 200 with the SAME 12,016-byte text/html shell for EVERY path, including every
+  /.well-known/ path and every spec path probed in contract discovery. None of these 200s is
+  a document: each is the SPA catch-all. They are recorded as present-but-not-a-real-document
+  and nothing was saved. No WellKnown or SecurityTxt pointer is emitted in apis.yml, because
+  no path returned a real document.
+hosts:
+  - host: https://www.yellowbrink.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        content_type: text/html
+        real_document: false
+        result: spa-shell
+        note: SPA catch-all HTML shell, not a security.txt.
+      - path: /.well-known/openid-configuration
+        status: 200
+        content_type: text/html
+        real_document: false
+        result: spa-shell
+        note: SPA catch-all HTML shell, not an OpenID discovery document.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        content_type: text/html
+        real_document: false
+        result: spa-shell
+        note: SPA catch-all HTML shell, not an authorization-server metadata document.
+      - path: /.well-known/api-catalog
+        status: 200
+        content_type: text/html
+        real_document: false
+        result: spa-shell
+        note: SPA catch-all HTML shell, not an RFC 9727 API catalog.
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        content_type: text/html
+        real_document: false
+        result: spa-shell
+        note: SPA catch-all HTML shell, not a plugin manifest.
+      - path: /.well-known/agent-card.json
+        status: 200
+        content_type: text/html
+        real_document: false
+        result: spa-shell
+        note: >-
+          SPA catch-all HTML shell, not an A2A AgentCard. No a2a/ artifact was written —
+          this is the dominant false positive the pipeline warns about.
+      - path: /.well-known/agent.json
+        status: 200
+        content_type: text/html
+        real_document: false
+        result: spa-shell
+        note: SPA catch-all HTML shell, not a pre-0.3 A2A AgentCard.
+control:
+  note: >-
+    Control probe confirming the catch-all — a nonsense path and every OpenAPI candidate path
+    return the identical 12,016-byte HTML shell, so a 200 on this host carries no information.
+  probes:
+    - url: https://www.yellowbrink.com/openapi.json
+      status: 200
+      bytes: 12016
+      body: html-shell
+    - url: https://www.yellowbrink.com/swagger.json
+      status: 200
+      bytes: 12016
+      body: html-shell
+    - url: https://www.yellowbrink.com/llms.txt
+      status: 200
+      bytes: 12016
+      body: html-shell
+    - url: https://www.yellowbrink.com/sitemap.xml
+      status: 200
+      bytes: 12016
+      body: html-shell
+    - url: https://www.yellowbrink.com/robots.txt
+      status: 200
+      bytes: 23
+      body: "User-agent: * / Allow: /"
+      note: The only path on the host that returns something other than the SPA shell.
